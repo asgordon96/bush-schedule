@@ -11,7 +11,7 @@ db = SQLAlchemy(app)
 def main():
     return "Hello Flask"
 	
-@app.route("schedule")
+@app.route("/schedule")
 def schedule():
 	return render_template('schedule.html')
     
