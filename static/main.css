@@ -1,0 +1,32 @@
+
+body {
+	margin: 10px;
+	background-image: url('background.png');
+	background-repeat: repeat;
+}
+
+#wrapper {
+	width: 875px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: #EFEFEF;
+	box-shadow: 0 0 7px #AAAAAA;
+	border: solid 1px #FFFFFF;
+	height: 900px;
+}
+
+.day {
+	width: 175px;
+	height: 100%;
+	float: left;
+}
+
+.block {
+	width: 175px;
+	height: 100px;
+	background-color: #fcfcfc;
+}
+
+.blockInner { /* Don't hate the player, hate the game. */
+	padding: 5px;
+}

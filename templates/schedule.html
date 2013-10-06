@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>asdf</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+</head>
+<body>
+
+<!-- Guns don't kill people. Wrappers kill people. -->
+<div id="wrapper">
+
+	{% for i in range(0,5): %}
+	<div class="day">
+		<div class="block">
+			<div class="blockInner">
+			{{ i }}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+</div>
+
+</body
+</html>
