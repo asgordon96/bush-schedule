@@ -10,7 +10,17 @@
 </head>
 
 <body>
-  {% block body %}{% endblock %}
+  {% block body %}
+  <div class="flash-messages">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+          <div class="alert alert-danger" style="text-align: center;"><p>{{ message }}</p></div>
+      {% endfor %}  
+    {% endif %}
+    {% endwith %}
+  </div>
+  {% endblock %}
 </body>
 
 </html>

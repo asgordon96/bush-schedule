@@ -1,14 +1,17 @@
 # The main Flask application file
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
-from flask import render_template, request, redirect
+from flask import render_template, request, redirect, session, flash
 
+import os
 import gmail
 import models
 
+Flask.debug = True
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + 'app.db'
 db = SQLAlchemy(app)
+app.secret_key = os.environ['FLASK_SECRET']
 
 @app.route("/")
 def main():
@@ -16,6 +19,10 @@ def main():
 	
 @app.route("/schedule")
 def schedule():
+    if session['user_id']:
+        user = models.User.query.get(session['user_id'])
+        print user.bush_email
+        
 	return render_template('schedule.html')
 
 # routing for accounts and logins
@@ -40,9 +47,11 @@ def login():
     password = request.form['password']
     user = models.User.authenticate(email, password)
     if user:
+        session['user_id'] = user.id
         return redirect("/schedule")
     else:
-        return redirect("/")    
+        flash("Incorrect email or password")
+        return redirect("/")
 
 if __name__ == "__main__":
     app.run()
