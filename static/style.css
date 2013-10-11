@@ -1,0 +1,12 @@
+.center {
+  margin: 0 auto;
+  width: 25%;
+}
+
+.input-width {
+  width: 300px;
+}
+
+.padded {
+  padding: 10px;
+}

@@ -2,26 +2,29 @@
 <html>
 <head>
   <title>Login</title>
+  <link rel="stylesheet" type="text/css" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="static/style.css">
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 </head>
 
 <body>
-  <div>
-    <form action="/login" method="POST">
-      <table>
-        <tr>
-          <td><label>Bush Email</label></td>
-          <td><input type="text" name="email"/></td>
-        </tr>
-        <tr>
-          <td><label>Password</label></td>
-          <td><input type="text" name="password"></td>
-        </tr>
-      </table>
-      <button>Login</button>
+  <div class="center">
+    <h2>Login</h2>
+    <form action = "/login" method="POST" role="form">
+      <div class = "form-group">
+        <label>Bush Email</label>
+        <input type="text" name="email" class="form-control input-width" placeholder="Enter Email"/>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" name="password" class="form-control input-width" placeholder="Password"/>
+      </div>
+      <button type="submit" class="btn btn-default">Login</button>
     </form>
-    
-    Or, <a href="/account/new">Create an Account<a>
-    
+    <div class="padded">
+      Or, <a href="/account/new" class="btn btn-default">Create an Account<a>
+    </div>
   </div>
 </body>
 
