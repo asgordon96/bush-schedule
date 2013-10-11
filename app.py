@@ -32,7 +32,7 @@ def create_account():
         db.session.add(new_user)
         db.session.commit()
     
-    return "Email Sent"
+    return redirect("/")
 
 @app.route("/login", methods=["POST"])
 def login():
