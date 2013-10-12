@@ -4,6 +4,7 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask import render_template, request, redirect, session, flash
 
 import os
+from functools import wraps
 import gmail
 import models
 
@@ -13,15 +14,24 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + 'app.db'
 db = SQLAlchemy(app)
 app.secret_key = os.environ['FLASK_SECRET']
 
+def require_login(f):
+    @wraps(f)
+    def new_function(*args, **kwargs):
+        if not 'user_id' in session.keys() or not session['user_id']:
+            return redirect("/")
+        else:
+            return f(*args, **kwargs)
+    return new_function
+
 @app.route("/")
 def main():
     return render_template("login_form.html")
 	
 @app.route("/schedule")
+@require_login
 def schedule():
     if session['user_id']:
         user = models.User.query.get(session['user_id'])
-        print user.bush_email
         
 	return render_template('schedule.html')
 
