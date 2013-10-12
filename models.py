@@ -21,5 +21,7 @@ class User(db.Model):
         self.password_hash = bcrypt.hashpw(password, bcrypt.gensalt())
         if grade:
             self.grade = grade
-        
+    
+    def change_password(self, new_password):
+        self.password_hash = bcrypt.hashpw(new_password, bcrypt.gensalt())
     

@@ -7,8 +7,14 @@
 <body>
 
 <!-- Guns don't kill people. Wrappers kill people. -->
+<div>
+  <form action="/logout" method="POST">
+    <button style="float:right;">Logout</button>
+  </form>
+</div>
+  
 <div id="wrapper">
-
+  
 	{% for i in range(0,5): %}
 	<div class="day">
 		<div class="block">

@@ -63,5 +63,35 @@ def login():
         flash("Incorrect email or password")
         return redirect("/")
 
+@app.route("/logout", methods=["POST"])
+@require_login
+def logout():
+    session.pop('user_id', None)
+    return redirect('/')
+
+# routes relating to chaning user info (passwords)
+@app.route("/password", methods=["GET"])
+@require_login
+def password_change_page():
+    return render_template("change_password.html")
+    
+@app.route("/password", methods=["POST"])
+@require_login
+def change_password():
+    user = models.User.query.get(session['user_id'])
+    old_password = request.form["current_password"]
+    new_password = request.form["new_password"]
+    confirm = request.form["new_password_confirm"]
+    if models.User.authenticate(user.bush_email, old_password) == user:
+        if new_password == confirm:
+            user.change_password(confirm)
+            db.session.commit()
+            return "Password Changed. <a href='/schedule'>Home</a>"
+        else:
+            flash("Password did not match")
+    else:
+        flash("Incorrect Password")
+    return redirect("/password")
+
 if __name__ == "__main__":
     app.run()
