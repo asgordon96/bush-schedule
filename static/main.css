@@ -30,3 +30,16 @@ body {
 .blockInner { /* Don't hate the player, hate the game. */
 	padding: 5px;
 }
+
+.columnRight {
+  float: right;
+  padding: 10px;
+}
+
+.list {
+  list-style: none;
+}
+.item {
+  padding: 10px;
+  font-size: 20px;
+}

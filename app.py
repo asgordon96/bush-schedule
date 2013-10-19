@@ -33,7 +33,7 @@ def schedule():
     if session['user_id']:
         user = models.User.query.get(session['user_id'])
         
-	return render_template('schedule.html')
+	return render_template('schedule.html', classes=user.classes)
 
 # routing for accounts and logins
 @app.route("/account/new")
