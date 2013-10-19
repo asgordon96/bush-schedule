@@ -22,6 +22,11 @@ class User(db.Model):
         self.password_hash = bcrypt.hashpw(password, bcrypt.gensalt())
         if grade:
             self.grade = grade
+            
+        blocks = ['A', 'B', 'C', 'D', 'E', 'F']
+        for block in blocks:
+            block_class = Class(block, "")
+            self.classes.append(block_class)
     
     def __repr__(self):
         return "%d %s" % (self.id, self.bush_email)

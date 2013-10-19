@@ -93,5 +93,23 @@ def change_password():
         flash("Incorrect Password")
     return redirect("/password")
 
+@app.route("/classes", methods=["GET"])
+@require_login
+def classes_form():
+    return render_template("classes_form.html")
+    
+@app.route("/classes", methods=["POST"])
+@require_login
+def add_classes():
+    user = models.User.query.get(session['user_id'])
+    blocks = request.form.keys()
+    blocks.sort()
+    for i in range(6):
+        block_class = user.classes[i]
+        block_class.name = request.form[blocks[i]]
+        db.session.merge(block_class)
+    db.session.commit()
+    return redirect('/schedule')
+
 if __name__ == "__main__":
     app.run()
