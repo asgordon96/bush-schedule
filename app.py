@@ -85,6 +85,7 @@ def change_password():
     if models.User.authenticate(user.bush_email, old_password) == user:
         if new_password == confirm:
             user.change_password(confirm)
+            db.session.merge(user)
             db.session.commit()
             return "Password Changed. <a href='/schedule'>Home</a>"
         else:
