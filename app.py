@@ -7,6 +7,7 @@ import os
 from functools import wraps
 import gmail
 import models
+import class_parser
 
 Flask.debug = True
 app = Flask(__name__)
@@ -32,8 +33,9 @@ def main():
 def schedule():
     if session['user_id']:
         user = models.User.query.get(session['user_id'])
-        
-	return render_template('schedule.html', classes=user.classes)
+    
+    days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
+    return render_template('schedule.html', classes=user.classes, days=days)
 
 # routing for accounts and logins
 @app.route("/account/new")
@@ -97,7 +99,10 @@ def change_password():
 @app.route("/classes", methods=["GET"])
 @require_login
 def classes_form():
-    return render_template("classes_form.html")
+    classes = class_parser.classes_by_block()
+    blocks = classes.keys()
+    blocks.sort()
+    return render_template("classes_form.html", blocks=blocks, classes=classes)
     
 @app.route("/classes", methods=["POST"])
 @require_login

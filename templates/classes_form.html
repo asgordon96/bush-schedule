@@ -1,53 +1,37 @@
 <!-- Built with Divshot - http://www.divshot.com -->
 {% extends "layout.html" %}  
 {% block title %}Add Classes{% endblock %}
-{% block name %}
+{% block head %}
   {{ super() }}
   <meta name="viewport" content="width=device-width">
+  <script src="/static/chosen_v1.0.0/chosen.jquery.min.js"></script>
+  <link rel="stylesheet" href="/static/chosen_v1.0.0/chosen.min.css">
+  <script type="text/javascript">
+  $(function() {
+    $("select").chosen();
+    // use the Chosen javascript select box library
+  });
+  </script>
+  
 {% endblock %}
 {% block body %}
   {{ super() }} 
   <div class="container">
     <h1>Enter your Current Classes</h1>
     <form action="/classes" method="POST">
-      <div class="form-group">
-        <label class="control-label">A Block Class</label>
-        <div class="controls">
-          <input type="text" class="form-control" name="A">
-          <div class="form-group">
-            <label class="control-label">B Block Class</label>
-            <div class="controls">
-              <input type="text" class="form-control" name="B">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">C Block Class</label>
-            <div class="controls">
-              <input type="text" class="form-control" name="C">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">D Block Class</label>
-            <label></label>
-            <div class="controls">
-              <input type="text" class="form-control" name="D">
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="control-label">E Block Class</label>
-            <div class="controls">
-              <input type="text" class="form-control" name="E">
-              <div class="form-group">
-                <label class="control-label">F Block Class</label>
-                <label></label>
-                <div class="controls">
-                  <input type="text" class="form-control" name="F">
-                </div>
-              </div>
-            </div>
+      {% for block_letter in blocks %}
+        <div class="form-group">
+          <label class="control-label">{{ block_letter }} Block Class</label>
+          <div class="controls">
+            <select data-placeholder="Choose a class..." name="{{ block_letter }}" style="width: 250px;" >
+              {% for class in classes[block_letter] %}
+                <option value="{{ class }}">{{ class }}</option>
+              {% endfor %}
+            </select>   
           </div>
         </div>
-      </div>
+      {% endfor %}
+
         <button class="btn btn-primary">Submit Classes</button>
     </form>
 

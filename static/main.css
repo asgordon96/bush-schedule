@@ -29,6 +29,7 @@ body {
 
 .blockInner { /* Don't hate the player, hate the game. */
 	padding: 5px;
+  text-align: center;
 }
 
 .columnRight {
