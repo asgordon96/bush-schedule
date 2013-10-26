@@ -1,0 +1,26 @@
+.column-header {
+  text-align: center;
+}
+
+ul {
+  list-style: none;
+}
+
+li {
+  border-bottom: 1px solid black;
+  padding: 5px;
+  width: 100%;
+}
+
+li:hover {
+  background-color: Gainsboro;
+  cursor: pointer;
+}
+
+li.selected {
+  background-color: #37BD50;
+}
+
+li.choice {
+  background-color: red;
+}

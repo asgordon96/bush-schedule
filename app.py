@@ -96,6 +96,19 @@ def change_password():
         flash("Incorrect Password")
     return redirect("/password")
 
+@app.route("/class-list")
+@require_login
+def class_list():
+    return render_template("class_list.html")
+
+@app.route("/data")
+@require_login
+def data():
+    f = open("class_schedule.csv")
+    data = f.read()
+    f.close()
+    return data
+
 @app.route("/classes", methods=["GET"])
 @require_login
 def classes_form():
