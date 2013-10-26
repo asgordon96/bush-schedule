@@ -51,3 +51,18 @@ def classes_by_block():
     for k in classes.keys():
         classes[k].sort()
     return classes
+
+def save_as_csv(filename):
+    data = get_classes()
+    write = []
+    for item in data:
+        block = item[0].split()[0]
+        subject = item[0].split()[1]
+        class_name = item[1].split("(F)")[0].split("(1)")[0].strip()
+        teacher = item[2]
+        room = item[3]
+        write.append(",".join([block, subject, class_name, teacher, room]))
+    write = "\n".join(write)
+    f = open(filename, "w")
+    f.write(write)
+    f.close()
