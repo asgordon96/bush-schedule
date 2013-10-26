@@ -1,15 +1,15 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Bush School Classes List</title>
-  <link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.3.4/css/semantic.min.css"></link>
+{% extends "layout.html" %}  
+{% block title %}Bush Classes{% endblock %}
+{% block head %}
+  {{ super() }}
+  <script src="/static/chosen_v1.0.0/chosen.jquery.min.js"></script>
+  <link rel="stylesheet" href="/static/chosen_v1.0.0/chosen.min.css">
   <link rel="stylesheet" type="text/css" href="/static/classes.css"></link>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/semantic-ui/0.3.4/javascript/semantic.min.js"></script>
   <script type="text/javascript" src="/static/classes.js"></script>
-</head>
+{% endblock %}
 
-<body>
+{% block body %}
+  {{ super() }}
   <div class="container">
     <h1 class="column-header">Bush Upper School Classes</h1>
     
@@ -22,42 +22,39 @@
       <option value="PE">PE</option>
       <option value="Arts">Art</option>
     </select>
-    <button id="clear">Clear</button>
+    <button id="clear" class="btn btn-default">Clear</button>
     
-    <div class="ui six column grid">
-      <div class="column">
+    <div class="row">
+      <div class="col-md-2">
         <h3 class="column-header">A</h3>
         <ul class="A">
         </ul>
       </div>
-      <div class="column">
+      <div class="col-md-2">
         <h3 class="column-header">B</h3>
         <ul class="B">
         </ul>
       </div>
-      <div class="column">
+      <div class="col-md-2">
         <h3 class="column-header">C</h3>
         <ul class="C">
         </ul>
       </div>
-      <div class="column">
+      <div class="col-md-2">
         <h3 class="column-header">D</h3>
         <ul class="D">
         </ul>
       </div>
-      <div class="column">
+      <div class="col-md-2">
         <h3 class="column-header">E</h3>
         <ul class="E">
         </ul>
       </div>
-      <div class="column">
+      <div class="col-md-2">
         <h3 class="column-header">F</h3>
         <ul class="F">
         </ul>
       </div>
     </div>
   </div>
-    
-</body>
-
-</html>
+{% endblock %}

@@ -5,7 +5,6 @@
     return $.get("/data", function(data, other) {
       var block, class_data, clear, data_by_block, filter, html_string, item, line, list, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
       data = data.split("\n");
-      console.log(data);
       data = (function() {
         var _i, _len, _results;
         _results = [];
@@ -37,9 +36,11 @@
           item = $("<li></li>").text("" + class_data[2]);
           item.data(class_data);
           html_string = "<h3>" + class_data[2] + "</h3><p>" + class_data[3] + "</p><p>Room: " + class_data[4] + "</p>";
-          item.popup({
-            on: 'click',
-            html: html_string
+          item.popover({
+            content: html_string,
+            html: true,
+            placement: 'top',
+            trigger: 'hover'
           });
           list.append(item);
         }
@@ -69,9 +70,10 @@
       $("li").click(function(event) {
         return filter($(event.target).data()[2], 2);
       });
-      return $("li").dblclick(function(event) {
+      $("li").dblclick(function(event) {
         return $(event.target).toggleClass("choice");
       });
+      return $("select").chosen();
     });
   });
 

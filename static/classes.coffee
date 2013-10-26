@@ -1,7 +1,6 @@
 $ ->
   $.get("/data", (data, other) -> 
     data = data.split("\n")
-    console.log(data)
     data = (line.split(",") for line in data)
     data_by_block = { A:[], B:[], C:[], D:[], E:[], F:[] }
     for line in data
@@ -13,7 +12,7 @@ $ ->
         item = $("<li></li>").text("#{class_data[2]}")
         item.data(class_data)
         html_string = "<h3>#{class_data[2]}</h3><p>#{class_data[3]}</p><p>Room: #{class_data[4]}</p>"
-        item.popup({on:'click', html:html_string})
+        item.popover({content:html_string, html:true, placement:'top', trigger:'hover'})
         list.append(item)
       
     filter = (string, index) ->
@@ -37,4 +36,6 @@ $ ->
     $("li").dblclick( (event) ->
       $(event.target).toggleClass("choice")
     )
+    
+    $("select").chosen()
   )
