@@ -26,7 +26,10 @@ def require_login(f):
 
 @app.route("/")
 def main():
-    return render_template("login_form.html")
+    if 'user_id' in session.keys() and session['user_id']:
+        return redirect('/schedule')
+    else:
+        return render_template("login_form.html")
 	
 @app.route("/schedule")
 @require_login
@@ -50,9 +53,13 @@ def create_account():
         new_user = models.User(request.form['email'], temp_password)
         db.session.add(new_user)
         db.session.commit()
-    
-    return redirect("/")
-
+        message = "Your password has been emailed to %s" % (request.form['email'])
+        flash(message, "alert-success")
+        return redirect("/")
+    else:
+        flash("Invalid email address. Only @bush.edu addresses are accepted", "alert-danger")
+        return redirect("/account/new")
+        
 @app.route("/login", methods=["POST"])
 def login():
     email = request.form['email']
@@ -62,7 +69,7 @@ def login():
         session['user_id'] = user.id
         return redirect("/schedule")
     else:
-        flash("Incorrect email or password")
+        flash("Incorrect email or password", "alert-danger")
         return redirect("/")
 
 @app.route("/logout", methods=["POST"])
@@ -89,11 +96,12 @@ def change_password():
             user.change_password(confirm)
             db.session.merge(user)
             db.session.commit()
-            return "Password Changed. <a href='/schedule'>Home</a>"
+            #flash("Password Changed", "alert-success")
+            return redirect("/schedule")
         else:
-            flash("Password did not match")
+            flash("Password did not match", "alert-danger")
     else:
-        flash("Incorrect Password")
+        flash("Incorrect Password", "alert-danger")
     return redirect("/password")
 
 @app.route("/class-list")
