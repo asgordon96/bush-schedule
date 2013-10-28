@@ -1,18 +1,17 @@
 # The main Flask application file
 from flask import Flask
-from flask.ext.sqlalchemy import SQLAlchemy
 from flask import render_template, request, redirect, session, flash
 
 import os
 from functools import wraps
 import gmail
-import models
+from models import User, Class, db
 import class_parser
 
 Flask.debug = True
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + 'app.db'
-db = SQLAlchemy(app)
+db.init_app(app)
 app.secret_key = os.environ['FLASK_SECRET']
 
 def require_login(f):
@@ -35,7 +34,7 @@ def main():
 @require_login
 def schedule():
     if session['user_id']:
-        user = models.User.query.get(session['user_id'])
+        user = User.query.get(session['user_id'])
     
     days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"]
     return render_template('schedule.html', classes=user.classes, days=days)
@@ -50,7 +49,7 @@ def create_account():
     # send an email the the bush.edu email address with a temp password
     if request.form['email'].endswith("@bush.edu"):
         temp_password = gmail.send_password(request.form['email'])
-        new_user = models.User(request.form['email'], temp_password)
+        new_user = User(request.form['email'], temp_password)
         db.session.add(new_user)
         db.session.commit()
         message = "Your password has been emailed to %s" % (request.form['email'])
@@ -64,7 +63,7 @@ def create_account():
 def login():
     email = request.form['email']
     password = request.form['password']
-    user = models.User.authenticate(email, password)
+    user = User.authenticate(email, password)
     if user:
         session['user_id'] = user.id
         return redirect("/schedule")
@@ -87,11 +86,11 @@ def password_change_page():
 @app.route("/password", methods=["POST"])
 @require_login
 def change_password():
-    user = models.User.query.get(session['user_id'])
+    user = User.query.get(session['user_id'])
     old_password = request.form["current_password"]
     new_password = request.form["new_password"]
     confirm = request.form["new_password_confirm"]
-    if models.User.authenticate(user.bush_email, old_password) == user:
+    if User.authenticate(user.bush_email, old_password) == user:
         if new_password == confirm:
             user.change_password(confirm)
             db.session.merge(user)
@@ -128,7 +127,7 @@ def classes_form():
 @app.route("/classes", methods=["POST"])
 @require_login
 def add_classes():
-    user = models.User.query.get(session['user_id'])
+    user = User.query.get(session['user_id'])
     blocks = request.form.keys()
     blocks.sort()
     for i in range(6):

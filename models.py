@@ -1,6 +1,8 @@
 # The Main Database Models
 import bcrypt
-from app import db
+from flask.ext.sqlalchemy import SQLAlchemy
+
+db = SQLAlchemy()
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
