@@ -40,12 +40,16 @@ def get_classes(filename, rows=45):
 
     return zip(blocks, classes, teachers, rooms)
     
-def classes_by_block():
-    data = get_classes()
+def classes_by_block(datafile):
+    f = open(datafile)
+    data = f.readlines()
+    f.close()
+    
     classes = {}
-    for item in data:
-        block = item[0].split()[0]
-        name = item[1].split("(F)")[0].split("(1)")[0].split("(W)")[0].strip()
+    for line in data:
+        line = line.split(',')
+        block = line[0]
+        name = line[2]
         if block in classes.keys():
             classes[block].append(name)
         else:

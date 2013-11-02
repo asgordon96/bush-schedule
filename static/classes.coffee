@@ -1,9 +1,13 @@
 $ ->
   $.get("/data", (data, other) -> 
-    data = data.split("\n")
-    data = (line.split(",") for line in data)
+    split_data = data.split("\t")
+    fall = split_data[0].split('\n')
+    winter = split_data[1].split('\n')
+    spring = split_data[2].split('\n')
+
+    fall_data = (line.split(",") for line in fall)
     data_by_block = { A:[], B:[], C:[], D:[], E:[], F:[] }
-    for line in data
+    for line in fall_data
       data_by_block[line[0]].push(line)
     
     for block in Object.keys(data_by_block)

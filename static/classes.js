@@ -3,13 +3,16 @@
 
   $(function() {
     return $.get("/data", function(data, other) {
-      var block, class_data, clear, data_by_block, filter, html_string, item, line, list, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
-      data = data.split("\n");
-      data = (function() {
+      var block, class_data, clear, data_by_block, fall, fall_data, filter, html_string, item, line, list, split_data, spring, winter, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
+      split_data = data.split("\t");
+      fall = split_data[0].split('\n');
+      winter = split_data[1].split('\n');
+      spring = split_data[2].split('\n');
+      fall_data = (function() {
         var _i, _len, _results;
         _results = [];
-        for (_i = 0, _len = data.length; _i < _len; _i++) {
-          line = data[_i];
+        for (_i = 0, _len = fall.length; _i < _len; _i++) {
+          line = fall[_i];
           _results.push(line.split(","));
         }
         return _results;
@@ -22,8 +25,8 @@
         E: [],
         F: []
       };
-      for (_i = 0, _len = data.length; _i < _len; _i++) {
-        line = data[_i];
+      for (_i = 0, _len = fall_data.length; _i < _len; _i++) {
+        line = fall_data[_i];
         data_by_block[line[0]].push(line);
       }
       _ref = Object.keys(data_by_block);

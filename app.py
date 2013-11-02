@@ -111,15 +111,19 @@ def class_list():
 @app.route("/data")
 @require_login
 def data():
-    f = open("class_schedule.csv")
-    data = f.read()
-    f.close()
-    return data
+    filenames = ["data/fall2013.csv", "data/winter2013.csv", "data/spring2013.csv"]
+    data = []
+    for name in filenames:
+        f = open(name)
+        content = f.read()
+        f.close()
+        data.append(content)
+    return '\t'.join(data)
 
 @app.route("/classes", methods=["GET"])
 @require_login
 def classes_form():
-    classes = class_parser.classes_by_block()
+    classes = class_parser.classes_by_block("data/fall2013.csv")
     blocks = classes.keys()
     blocks.sort()
     return render_template("classes_form.html", blocks=blocks, classes=classes)
