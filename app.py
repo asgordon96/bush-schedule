@@ -66,7 +66,7 @@ def login():
     user = User.authenticate(email, password)
     if user:
         session['user_id'] = user.id
-        return redirect("/schedule")
+        return redirect("/class-list")
     else:
         flash("Incorrect email or password", "alert-danger")
         return redirect("/")

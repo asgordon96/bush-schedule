@@ -4,21 +4,37 @@ $ ->
     fall = split_data[0].split('\n')
     winter = split_data[1].split('\n')
     spring = split_data[2].split('\n')
-
-    fall_data = (line.split(",") for line in fall)
-    data_by_block = { A:[], B:[], C:[], D:[], E:[], F:[] }
-    for line in fall_data
-      data_by_block[line[0]].push(line)
     
-    for block in Object.keys(data_by_block)
-      list = $(".#{block}")
-      for class_data in data_by_block[block]
-        item = $("<li></li>").text("#{class_data[2]}")
-        item.data(class_data)
-        html_string = "<h3>#{class_data[2]}</h3><p>#{class_data[3]}</p><p>Room: #{class_data[4]}</p>"
-        item.popover({content:html_string, html:true, placement:'top', trigger:'hover'})
-        list.append(item)
-      
+    classes_by_block = (data) ->
+      all_data = (line.split(",") for line in data)
+      data_by_block = { A:[], B:[], C:[], D:[], E:[], F:[] }
+      for line in all_data
+        data_by_block[line[0]].push(line)
+      data_by_block
+    
+    fall = classes_by_block(fall)
+    winter = classes_by_block(winter)
+    spring = classes_by_block(spring)
+    all_classes = { 'fall':fall, 'winter':winter, 'spring':spring  }
+    
+    show_classes = (classes) ->
+      for block in Object.keys(classes)
+        list = $(".#{block}")
+        list.html("")
+        for class_data in classes[block]
+          item = $("<li></li>").text("#{class_data[2]}")
+          item.data(class_data)
+          html_string = "<h3>#{class_data[2]}</h3><p>#{class_data[3]}</p><p>Room: #{class_data[4]}</p>"
+          item.popover({content:html_string, html:true, placement:'top', trigger:'hover'})
+          list.append(item)
+    
+    show_classes(fall)
+    
+    $("#term").change( ->
+      term = $("#term").val()
+      show_classes(all_classes[term])
+    )
+    
     filter = (string, index) ->
       items = $("li")
       items.removeClass("selected")
@@ -42,4 +58,6 @@ $ ->
     )
     
     $("select").chosen()
+    $("div.chosen-container").css("width", "125px")
+    
   )

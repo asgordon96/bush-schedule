@@ -3,57 +3,86 @@
 
   $(function() {
     return $.get("/data", function(data, other) {
-      var block, class_data, clear, data_by_block, fall, fall_data, filter, html_string, item, line, list, split_data, spring, winter, _i, _j, _k, _len, _len1, _len2, _ref, _ref1;
+      var all_classes, classes_by_block, clear, fall, filter, show_classes, split_data, spring, winter;
       split_data = data.split("\t");
       fall = split_data[0].split('\n');
       winter = split_data[1].split('\n');
       spring = split_data[2].split('\n');
-      fall_data = (function() {
-        var _i, _len, _results;
+      classes_by_block = function(data) {
+        var all_data, data_by_block, line, _i, _len;
+        all_data = (function() {
+          var _i, _len, _results;
+          _results = [];
+          for (_i = 0, _len = data.length; _i < _len; _i++) {
+            line = data[_i];
+            _results.push(line.split(","));
+          }
+          return _results;
+        })();
+        data_by_block = {
+          A: [],
+          B: [],
+          C: [],
+          D: [],
+          E: [],
+          F: []
+        };
+        for (_i = 0, _len = all_data.length; _i < _len; _i++) {
+          line = all_data[_i];
+          data_by_block[line[0]].push(line);
+        }
+        return data_by_block;
+      };
+      fall = classes_by_block(fall);
+      winter = classes_by_block(winter);
+      spring = classes_by_block(spring);
+      all_classes = {
+        'fall': fall,
+        'winter': winter,
+        'spring': spring
+      };
+      show_classes = function(classes) {
+        var block, class_data, html_string, item, list, _i, _len, _ref, _results;
+        _ref = Object.keys(classes);
         _results = [];
-        for (_i = 0, _len = fall.length; _i < _len; _i++) {
-          line = fall[_i];
-          _results.push(line.split(","));
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          block = _ref[_i];
+          list = $("." + block);
+          list.html("");
+          _results.push((function() {
+            var _j, _len1, _ref1, _results1;
+            _ref1 = classes[block];
+            _results1 = [];
+            for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+              class_data = _ref1[_j];
+              item = $("<li></li>").text("" + class_data[2]);
+              item.data(class_data);
+              html_string = "<h3>" + class_data[2] + "</h3><p>" + class_data[3] + "</p><p>Room: " + class_data[4] + "</p>";
+              item.popover({
+                content: html_string,
+                html: true,
+                placement: 'top',
+                trigger: 'hover'
+              });
+              _results1.push(list.append(item));
+            }
+            return _results1;
+          })());
         }
         return _results;
-      })();
-      data_by_block = {
-        A: [],
-        B: [],
-        C: [],
-        D: [],
-        E: [],
-        F: []
       };
-      for (_i = 0, _len = fall_data.length; _i < _len; _i++) {
-        line = fall_data[_i];
-        data_by_block[line[0]].push(line);
-      }
-      _ref = Object.keys(data_by_block);
-      for (_j = 0, _len1 = _ref.length; _j < _len1; _j++) {
-        block = _ref[_j];
-        list = $("." + block);
-        _ref1 = data_by_block[block];
-        for (_k = 0, _len2 = _ref1.length; _k < _len2; _k++) {
-          class_data = _ref1[_k];
-          item = $("<li></li>").text("" + class_data[2]);
-          item.data(class_data);
-          html_string = "<h3>" + class_data[2] + "</h3><p>" + class_data[3] + "</p><p>Room: " + class_data[4] + "</p>";
-          item.popover({
-            content: html_string,
-            html: true,
-            placement: 'top',
-            trigger: 'hover'
-          });
-          list.append(item);
-        }
-      }
+      show_classes(fall);
+      $("#term").change(function() {
+        var term;
+        term = $("#term").val();
+        return show_classes(all_classes[term]);
+      });
       filter = function(string, index) {
-        var i, items, list_item, _l, _ref2, _results;
+        var i, items, list_item, _i, _ref, _results;
         items = $("li");
         items.removeClass("selected");
         _results = [];
-        for (i = _l = 0, _ref2 = items.length; 0 <= _ref2 ? _l < _ref2 : _l > _ref2; i = 0 <= _ref2 ? ++_l : --_l) {
+        for (i = _i = 0, _ref = items.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
           list_item = $(items[i]);
           if (list_item.data()[index] === string) {
             _results.push(list_item.addClass("selected"));
@@ -76,7 +105,8 @@
       $("li").dblclick(function(event) {
         return $(event.target).toggleClass("choice");
       });
-      return $("select").chosen();
+      $("select").chosen();
+      return $("div.chosen-container").css("width", "125px");
     });
   });
 
