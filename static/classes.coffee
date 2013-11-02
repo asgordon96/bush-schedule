@@ -23,6 +23,7 @@ $ ->
         list.html("")
         for class_data in classes[block]
           item = $("<li></li>").text("#{class_data[2]}")
+          item.addClass("class")
           item.data(class_data)
           html_string = "<h3>#{class_data[2]}</h3><p>#{class_data[3]}</p><p>Room: #{class_data[4]}</p>"
           item.popover({content:html_string, html:true, placement:'top', trigger:'hover'})
@@ -36,24 +37,24 @@ $ ->
     )
     
     filter = (string, index) ->
-      items = $("li")
+      items = $("li.class")
       items.removeClass("selected")
       for i in [0...items.length]
         list_item = $(items[i])
         if list_item.data()[index] == string
           list_item.addClass("selected")
       
-    $("select").change( -> filter($("select").val(), 1) )
+    $("select").change( -> filter($("#subject").val(), 1) )
     
     clear = ->
       $("li").removeClass("selected")
     
     $("#clear").click(clear)
-    $("li").click( (event) ->
+    $(document).on("click", "li.class", (event) ->
       filter($(event.target).data()[2], 2)
     )
     
-    $("li").dblclick( (event) ->
+    $(document).on("dblclick", "li", (event) ->
       $(event.target).toggleClass("choice")
     )
     

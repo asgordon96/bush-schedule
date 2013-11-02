@@ -56,6 +56,7 @@
             for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
               class_data = _ref1[_j];
               item = $("<li></li>").text("" + class_data[2]);
+              item.addClass("class");
               item.data(class_data);
               html_string = "<h3>" + class_data[2] + "</h3><p>" + class_data[3] + "</p><p>Room: " + class_data[4] + "</p>";
               item.popover({
@@ -79,7 +80,7 @@
       });
       filter = function(string, index) {
         var i, items, list_item, _i, _ref, _results;
-        items = $("li");
+        items = $("li.class");
         items.removeClass("selected");
         _results = [];
         for (i = _i = 0, _ref = items.length; 0 <= _ref ? _i < _ref : _i > _ref; i = 0 <= _ref ? ++_i : --_i) {
@@ -93,16 +94,16 @@
         return _results;
       };
       $("select").change(function() {
-        return filter($("select").val(), 1);
+        return filter($("#subject").val(), 1);
       });
       clear = function() {
         return $("li").removeClass("selected");
       };
       $("#clear").click(clear);
-      $("li").click(function(event) {
+      $(document).on("click", "li.class", function(event) {
         return filter($(event.target).data()[2], 2);
       });
-      $("li").dblclick(function(event) {
+      $(document).on("dblclick", "li", function(event) {
         return $(event.target).toggleClass("choice");
       });
       $("select").chosen();
