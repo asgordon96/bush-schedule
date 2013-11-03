@@ -24,3 +24,8 @@ li.selected {
 li.choice {
   background-color: red;
 }
+
+div.right {
+  float: right;
+  padding: 5px;
+}

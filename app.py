@@ -26,7 +26,7 @@ def require_login(f):
 @app.route("/")
 def main():
     if 'user_id' in session.keys() and session['user_id']:
-        return redirect('/schedule')
+        return redirect('/class-list')
     else:
         return render_template("login_form.html")
 	
@@ -95,8 +95,8 @@ def change_password():
             user.change_password(confirm)
             db.session.merge(user)
             db.session.commit()
-            #flash("Password Changed", "alert-success")
-            return redirect("/schedule")
+            flash("Password Changed", "alert-success")
+            return redirect("/class-list")
         else:
             flash("Password did not match", "alert-danger")
     else:

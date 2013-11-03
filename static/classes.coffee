@@ -61,4 +61,8 @@ $ ->
     $("select").chosen()
     $("div.chosen-container").css("width", "125px")
     
+    # code to hide the flash message
+    hideFlash = -> $(".flash-messages").slideUp(500)
+    window.setTimeout(hideFlash, 2500)
+    
   )

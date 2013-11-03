@@ -3,7 +3,7 @@
 
   $(function() {
     return $.get("/data", function(data, other) {
-      var all_classes, classes_by_block, clear, fall, filter, show_classes, split_data, spring, winter;
+      var all_classes, classes_by_block, clear, fall, filter, hideFlash, show_classes, split_data, spring, winter;
       split_data = data.split("\t");
       fall = split_data[0].split('\n');
       winter = split_data[1].split('\n');
@@ -107,7 +107,11 @@
         return $(event.target).toggleClass("choice");
       });
       $("select").chosen();
-      return $("div.chosen-container").css("width", "125px");
+      $("div.chosen-container").css("width", "125px");
+      hideFlash = function() {
+        return $(".flash-messages").slideUp(500);
+      };
+      return window.setTimeout(hideFlash, 2500);
     });
   });
 

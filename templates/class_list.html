@@ -11,7 +11,21 @@
 {% block body %}
   {{ super() }}
   <div class="container">
-    <h1 class="column-header">Bush Upper School Classes</h1>
+    <div class="right">
+      <div class="right">
+        <form action="/logout" method="POST" style="margin: 0; padding: 0;">
+          <button class="btn btn-default">Log Out</button>
+        </form>
+      </div>
+      
+      <div class="right">
+        <a class="btn btn-default" href="/password">Change Password</a>
+      </div>
+    </div>
+    
+    <div style="clear:right;">
+      <h1 class="column-header">Bush Upper School Classes</h1>
+    </div>
     
     <select id="term">
       <option value="fall">Fall</option>
