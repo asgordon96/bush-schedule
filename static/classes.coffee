@@ -59,7 +59,7 @@ $ ->
       classes_list[$("#term").val()]
     
     $("#search").typeahead({autoselect:false, source:search})
-    $("#search").focus( (event) ->
+    $("#search").change( (event) ->
       class_name = $(event.target).val()
       current_classes = classes_list[$("#term").val()]
       if class_name in current_classes

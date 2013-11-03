@@ -119,7 +119,7 @@
         autoselect: false,
         source: search
       });
-      $("#search").focus(function(event) {
+      $("#search").change(function(event) {
         var class_name, current_classes;
         class_name = $(event.target).val();
         current_classes = classes_list[$("#term").val()];
