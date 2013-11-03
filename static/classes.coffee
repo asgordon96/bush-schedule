@@ -5,6 +5,15 @@ $ ->
     winter = split_data[1].split('\n')
     spring = split_data[2].split('\n')
     
+    class_list = (data) ->
+      list = []
+      for line in data
+        name = line.split(",")[2]
+        list.push(name)
+      list
+    
+    classes_list = {fall: class_list(fall), winter: class_list(winter), spring: class_list(spring)}
+    
     classes_by_block = (data) ->
       all_data = (line.split(",") for line in data)
       data_by_block = { A:[], B:[], C:[], D:[], E:[], F:[] }
@@ -45,6 +54,17 @@ $ ->
           list_item.addClass("selected")
       
     $("#subject").change( -> filter($("#subject").val(), 1) )
+    
+    search = (query, process) ->
+      classes_list[$("#term").val()]
+    
+    $("#search").typeahead({autoselect:false, source:search})
+    $("#search").focus( (event) ->
+      class_name = $(event.target).val()
+      current_classes = classes_list[$("#term").val()]
+      if class_name in current_classes
+        filter(class_name, 2)
+    )
     
     clear = ->
       $("li").removeClass("selected")

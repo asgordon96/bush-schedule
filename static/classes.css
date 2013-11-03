@@ -6,7 +6,7 @@ ul {
   list-style: none;
 }
 
-li {
+li.class {
   border-bottom: 1px solid black;
   padding: 5px;
   width: 100%;
@@ -27,5 +27,9 @@ li.choice {
 
 div.right {
   float: right;
+  padding: 5px;
+}
+
+div.padded {
   padding: 5px;
 }

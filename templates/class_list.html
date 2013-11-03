@@ -5,6 +5,7 @@
   <script src="/static/chosen_v1.0.0/chosen.jquery.min.js"></script>
   <link rel="stylesheet" href="/static/chosen_v1.0.0/chosen.min.css">
   <link rel="stylesheet" type="text/css" href="/static/classes.css"></link>
+  <script type="text/javascript" src="/static/bootstrap3-typeahead.min.js"></script>
   <script type="text/javascript" src="/static/classes.js"></script>
 {% endblock %}
 
@@ -27,22 +28,29 @@
       <h1 class="column-header">Bush Upper School Classes</h1>
     </div>
     
-    <select id="term">
-      <option value="fall">Fall</option>
-      <option value="winter">Winter</option>
-      <option value="spring">Spring</option>
-    </select>
+    <div class="padded">
+      <select id="term">
+        <option value="fall">Fall</option>
+        <option value="winter">Winter</option>
+        <option value="spring">Spring</option>
+      </select>
     
-    <select id="subject">
-      <option value="Hist">History</option>
-      <option value="Eng">English</option>
-      <option value="Sci">Science</option>
-      <option value="Math">Math</option>
-      <option value="Lang">Language</option>
-      <option value="PE">PE</option>
-      <option value="Arts">Art</option>
-    </select>
-    <button id="clear" class="btn btn-default">Clear</button>
+      <select id="subject">
+        <option value="Hist">History</option>
+        <option value="Eng">English</option>
+        <option value="Sci">Science</option>
+        <option value="Math">Math</option>
+        <option value="Lang">Language</option>
+        <option value="PE">PE</option>
+        <option value="Arts">Art</option>
+      </select>
+      <button id="clear" class="btn btn-default">Clear</button>
+    </div>
+    
+    <div class="padded">
+      <label>Search for Classes</label>
+      <input id="search" type="text" class="typeahead"></input>
+    </div>
     
     <div class="row">
       <div class="col-md-2">
