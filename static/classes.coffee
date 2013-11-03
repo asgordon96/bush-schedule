@@ -44,7 +44,7 @@ $ ->
         if list_item.data()[index] == string
           list_item.addClass("selected")
       
-    $("select").change( -> filter($("#subject").val(), 1) )
+    $("#subject").change( -> filter($("#subject").val(), 1) )
     
     clear = ->
       $("li").removeClass("selected")

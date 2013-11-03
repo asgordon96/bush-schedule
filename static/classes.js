@@ -93,7 +93,7 @@
         }
         return _results;
       };
-      $("select").change(function() {
+      $("#subject").change(function() {
         return filter($("#subject").val(), 1);
       });
       clear = function() {
